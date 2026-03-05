@@ -40,19 +40,19 @@ interface StartupSpot {
 }
 
 const startups: StartupSpot[] = [
-  { name: "Alchemyst AI", city: "Bengaluru", x: 38, y: 73, logo: alchemystLogo, founder: alchemystFounder },
-  { name: "NuGenomics", city: "Bengaluru", x: 40, y: 75, logo: nugenomicsLogo, founder: nugenomicsFounder },
-  { name: "Bioreform", city: "Hyderabad", x: 42, y: 58, logo: bioreformLogo, founder: bioreformFounder },
-  { name: "Boingg", city: "Gurgaon", x: 37, y: 31, logo: boinggLogo, founder: boinggFounder },
-  { name: "FitKin", city: "Delhi", x: 35, y: 28, logo: fitkinLogo, founder: fitkinFounder },
-  { name: "ChocoChi", city: "Kozhikode", x: 28, y: 82, logo: chocochiLogo, founder: chocochiFounder },
-  { name: "DaanVeda", city: "Noida", x: 37, y: 27, logo: daanvedaLogo, founder: daanvedaFounder },
-  { name: "Kamikala", city: "Kalimpong", x: 72, y: 33, logo: kamikalaLogo, founder: kamikalaFounder },
-  { name: "Crink", city: "Kochi", x: 34, y: 82, logo: crinkLogo, founder: crinkFounder },
-  { name: "Naario", city: "Delhi", x: 34, y: 29, logo: naarioLogo, founder: naarioFounder },
-  { name: "My Pahadi Dukan", city: "Roorkee", x: 42, y: 21, logo: mypahadiLogo, founder: mypahadiFounder },
-  { name: "ExtraMile Play", city: "Mumbai", x: 24, y: 55, logo: extramileLogo, founder: extramileFounder },
-  { name: "Freshleaf", city: "Ludhiana", x: 30, y: 20, logo: freshleafLogo, founder: freshleafFounder },
+  { name: "Alchemyst AI", city: "Bengaluru", x: 39, y: 72, logo: alchemystLogo, founder: alchemystFounder },
+  { name: "NuGenomics", city: "Bengaluru", x: 40, y: 74, logo: nugenomicsLogo, founder: nugenomicsFounder },
+  { name: "Bioreform", city: "Hyderabad", x: 44, y: 60, logo: bioreformLogo, founder: bioreformFounder },
+  { name: "Boingg", city: "Gurgaon", x: 35, y: 35, logo: boinggLogo, founder: boinggFounder },
+  { name: "FitKin", city: "Delhi", x: 36, y: 33, logo: fitkinLogo, founder: fitkinFounder },
+  { name: "ChocoChi", city: "Kozhikode", x: 29, y: 83, logo: chocochiLogo, founder: chocochiFounder },
+  { name: "DaanVeda", city: "Noida", x: 37, y: 33, logo: daanvedaLogo, founder: daanvedaFounder },
+  { name: "Kamikala", city: "Kalimpong", x: 69, y: 40, logo: kamikalaLogo, founder: kamikalaFounder },
+  { name: "Crink", city: "Kochi", x: 34, y: 81, logo: crinkLogo, founder: crinkFounder },
+  { name: "Naario", city: "Delhi", x: 36, y: 34, logo: naarioLogo, founder: naarioFounder },
+  { name: "My Pahadi Dukan", city: "Roorkee", x: 42, y: 30, logo: mypahadiLogo, founder: mypahadiFounder },
+  { name: "ExtraMile Play", city: "Mumbai", x: 26, y: 58, logo: extramileLogo, founder: extramileFounder },
+  { name: "Freshleaf", city: "Ludhiana", x: 31, y: 29, logo: freshleafLogo, founder: freshleafFounder },
 ];
 
 const CYCLE_MS = 3500;
