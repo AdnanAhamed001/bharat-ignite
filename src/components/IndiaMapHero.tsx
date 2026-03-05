@@ -77,7 +77,7 @@ const IndiaMapHero = () => {
   }, [activeIndex]);
 
   return (
-    <div className="relative w-full h-full min-h-[500px] lg:min-h-[600px] overflow-hidden rounded-2xl">
+    <div className="relative w-full min-h-[500px] lg:min-h-[650px] h-[650px] overflow-hidden rounded-2xl">
       {/* Ambient glow effects */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <div className="absolute top-1/4 left-1/3 w-80 h-80 bg-secondary/10 rounded-full blur-[100px]" />
