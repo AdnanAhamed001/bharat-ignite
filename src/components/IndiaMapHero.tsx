@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { MapPin } from "lucide-react";
 import indiaMapSvg from "@/assets/india-map-detailed.svg";
 
 import alchemystLogo from "@/assets/startups/alchemyst-ai-logo.png";
@@ -12,6 +13,16 @@ import boinggLogo from "@/assets/startups/boingg-logo.png";
 import boinggFounder from "@/assets/startups/boingg-founder.png";
 import fitkinLogo from "@/assets/startups/fitkin-logo.png";
 import fitkinFounder from "@/assets/startups/fitkin-founder.png";
+import chocochiLogo from "@/assets/startups/chocochi-logo.png";
+import chocochiFounder from "@/assets/startups/chocochi-founder.png";
+import daanvedaLogo from "@/assets/startups/daanveda-logo.png";
+import daanvedaFounder from "@/assets/startups/daanveda-founder.png";
+import kamikalaLogo from "@/assets/startups/kamikala-logo.png";
+import kamikalaFounder from "@/assets/startups/kamikala-founder.png";
+import naarioLogo from "@/assets/startups/naario-logo.png";
+import naarioFounder from "@/assets/startups/naario-founder.png";
+import crinkLogo from "@/assets/startups/crink-logo.png";
+import crinkFounder from "@/assets/startups/crink-founder.png";
 
 interface StartupSpot {
   name: string;
@@ -20,21 +31,21 @@ interface StartupSpot {
   y: number;
   logo: string;
   founder: string;
-  founderName: string;
 }
 
 const startups: StartupSpot[] = [
-  { name: "Alchemyst AI", city: "Bengaluru", x: 44, y: 74, logo: alchemystLogo, founder: alchemystFounder, founderName: "Founders" },
-  { name: "NuGenomics", city: "Bengaluru", x: 44, y: 74, logo: nugenomicsLogo, founder: nugenomicsFounder, founderName: "Founder" },
-  { name: "Bioreform", city: "Hyderabad", x: 46, y: 63, logo: bioreformLogo, founder: bioreformFounder, founderName: "Founder" },
-  { name: "Boingg", city: "Gurgaon", x: 43, y: 32, logo: boinggLogo, founder: boinggFounder, founderName: "Founder" },
-  { name: "FitKin", city: "Delhi", x: 45, y: 30, logo: fitkinLogo, founder: fitkinFounder, founderName: "Founder" },
-  { name: "ChocoChi", city: "Kozhikode", x: 38, y: 82, logo: "", founder: "", founderName: "" },
-  { name: "DriverShaab", city: "Kolkata", x: 62, y: 50, logo: "", founder: "", founderName: "" },
-  { name: "Kamikala", city: "Kalimpong", x: 64, y: 38, logo: "", founder: "", founderName: "" },
-  { name: "Crink", city: "Kochi", x: 39, y: 85, logo: "", founder: "", founderName: "" },
-  { name: "BeFriends", city: "Vadodara", x: 33, y: 50, logo: "", founder: "", founderName: "" },
-  { name: "My Pahadi Dukan", city: "Roorkee", x: 44, y: 25, logo: "", founder: "", founderName: "" },
+  { name: "Alchemyst AI", city: "Bengaluru", x: 44, y: 76, logo: alchemystLogo, founder: alchemystFounder },
+  { name: "NuGenomics", city: "Bengaluru", x: 44, y: 76, logo: nugenomicsLogo, founder: nugenomicsFounder },
+  { name: "Bioreform", city: "Hyderabad", x: 46, y: 64, logo: bioreformLogo, founder: bioreformFounder },
+  { name: "Boingg", city: "Gurgaon", x: 42, y: 30, logo: boinggLogo, founder: boinggFounder },
+  { name: "FitKin", city: "Delhi", x: 44, y: 28, logo: fitkinLogo, founder: fitkinFounder },
+  { name: "ChocoChi", city: "Kozhikode", x: 37, y: 80, logo: chocochiLogo, founder: chocochiFounder },
+  { name: "DaanVeda", city: "Noida", x: 46, y: 29, logo: daanvedaLogo, founder: daanvedaFounder },
+  { name: "Kamikala", city: "Kalimpong", x: 63, y: 36, logo: kamikalaLogo, founder: kamikalaFounder },
+  { name: "Crink", city: "Kochi", x: 38, y: 83, logo: crinkLogo, founder: crinkFounder },
+  { name: "BeFriends", city: "Vadodara", x: 33, y: 50, logo: "", founder: "" },
+  { name: "My Pahadi Dukan", city: "Roorkee", x: 44, y: 24, logo: "", founder: "" },
+  { name: "Naario", city: "Delhi", x: 44, y: 28, logo: naarioLogo, founder: naarioFounder },
 ];
 
 const CYCLE_MS = 3500;
@@ -55,44 +66,69 @@ const IndiaMapHero = () => {
 
   const active = activeIndex >= 0 ? startups[activeIndex] : null;
 
+  // Card placement: if dot is in bottom half, show card above; otherwise below
+  const getCardPosition = (s: StartupSpot) => {
+    const isBottom = s.y > 50;
+    const isRight = s.x > 55;
+    const isLeft = s.x < 38;
+    return {
+      originY: isBottom ? "bottom" : "top",
+      offsetY: isBottom ? -24 : 24,
+      translateY: isBottom ? "-100%" : "0%",
+      offsetX: isRight ? -10 : isLeft ? 10 : 0,
+    };
+  };
+
   return (
-    <div className="relative w-full h-[650px] overflow-hidden rounded-2xl">
+    <div className="relative w-full h-[700px] overflow-hidden rounded-2xl">
       {/* Ambient glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/3 w-72 h-72 bg-secondary/8 rounded-full blur-[90px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-56 h-56 bg-primary/5 rounded-full blur-[80px]" />
       </div>
 
-      {/* Map image - static, no camera transform for performance */}
+      {/* Map image */}
       <img
         src={indiaMapSvg}
         alt="India startup ecosystem map"
         className="absolute inset-0 w-full h-full object-contain pointer-events-none select-none"
-        style={{ opacity: 0.8 }}
+        style={{ opacity: 0.75 }}
       />
 
-      {/* All city dots - always visible */}
-      {startups.map((s, i) => (
-        <div
-          key={s.name}
-          className="absolute"
-          style={{
-            left: `${s.x}%`,
-            top: `${s.y}%`,
-            transform: "translate(-50%, -50%)",
-            zIndex: 5,
-          }}
-        >
+      {/* All city dots */}
+      {startups.map((s, i) => {
+        const isActive = activeIndex === i;
+        return (
           <div
-            className={`rounded-full transition-all duration-500 ${
-              activeIndex === i
-                ? "w-3.5 h-3.5 bg-secondary shadow-[0_0_16px_6px_hsl(var(--secondary)/0.6)]"
-                : "w-2 h-2 bg-secondary/50"
-            }`}
-          />
-        </div>
-      ))}
+            key={`${s.name}-dot`}
+            className="absolute"
+            style={{
+              left: `${s.x}%`,
+              top: `${s.y}%`,
+              transform: "translate(-50%, -50%)",
+              zIndex: isActive ? 10 : 5,
+            }}
+          >
+            {/* Pulse ring for active */}
+            {isActive && (
+              <motion.div
+                className="absolute inset-0 -m-3 rounded-full border-2 border-secondary/40"
+                animate={{ scale: [1, 2.5], opacity: [0.6, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeOut" }}
+              />
+            )}
+            <div
+              className={`rounded-full transition-all duration-500 ${
+                isActive
+                  ? "w-3.5 h-3.5 bg-secondary shadow-[0_0_20px_8px_hsl(var(--secondary)/0.5)]"
+                  : "w-2 h-2 bg-secondary/40"
+              }`}
+            />
+          </div>
+        );
+      })}
 
-      {/* Active spotlight: single card shown at a time with AnimatePresence */}
+      {/* Active card */}
       <AnimatePresence mode="wait">
         {active && (
           <motion.div
@@ -101,62 +137,95 @@ const IndiaMapHero = () => {
             style={{
               left: `${active.x}%`,
               top: `${active.y}%`,
-              zIndex: 20,
+              zIndex: 30,
             }}
-            initial={{ opacity: 0, y: 10, x: "-50%", translateY: "-100%" }}
-            animate={{ opacity: 1, y: -20, x: "-50%", translateY: "-100%" }}
-            exit={{ opacity: 0, y: -30, x: "-50%", translateY: "-100%" }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
           >
-            {/* Pulse ring behind card */}
-            <motion.div
-              className="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-full w-4 h-4 rounded-full bg-secondary/30"
-              animate={{ scale: [1, 5, 5], opacity: [0.6, 0, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
-            />
+            {(() => {
+              const pos = getCardPosition(active);
+              return (
+                <motion.div
+                  className="absolute"
+                  style={{
+                    left: "50%",
+                    top: pos.originY === "bottom" ? "0%" : "0%",
+                    transform: `translate(calc(-50% + ${pos.offsetX}px), ${pos.translateY})`,
+                    marginTop: pos.originY === "bottom" ? `${pos.offsetY}px` : `${pos.offsetY}px`,
+                  }}
+                  animate={{ y: [0, -6, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  {/* Connecting line */}
+                  <div
+                    className="absolute left-1/2 -translate-x-1/2 w-px bg-gradient-to-b from-secondary/60 to-transparent"
+                    style={{
+                      height: "20px",
+                      ...(pos.originY === "bottom"
+                        ? { bottom: "-20px" }
+                        : { top: "-20px", transform: "translateX(-50%) rotate(180deg)" }),
+                    }}
+                  />
 
-            {active.logo && active.founder ? (
-              /* Full card with founder + logo */
-              <div className="bg-card/95 backdrop-blur-md border border-secondary/30 rounded-2xl shadow-[0_16px_48px_rgba(0,0,0,0.5),0_0_24px_hsl(var(--secondary)/0.15)] min-w-[220px]">
-                <div className="p-4">
-                  <div className="flex items-center gap-3 mb-3">
-                    <img
-                      src={active.founder}
-                      alt={active.founderName}
-                      className="w-14 h-14 rounded-full object-cover border-2 border-secondary/40 shadow-md"
-                    />
-                    <div>
-                      <p className="text-sm font-heading font-bold text-foreground leading-tight">
+                  {active.logo && active.founder ? (
+                    /* Premium card with large founder image */
+                    <div className="w-[200px] rounded-2xl overflow-hidden bg-card/95 backdrop-blur-xl border border-secondary/20 shadow-[0_20px_60px_rgba(0,0,0,0.5),0_0_30px_hsl(var(--secondary)/0.1)]">
+                      {/* Founder image - 65% of card */}
+                      <div className="relative w-full h-[160px] overflow-hidden">
+                        <img
+                          src={active.founder}
+                          alt={`${active.name} founder`}
+                          className="w-full h-full object-cover object-top"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
+                      </div>
+
+                      {/* Info section */}
+                      <div className="px-3.5 pb-3.5 -mt-3 relative z-10">
+                        {/* Logo */}
+                        <div className="w-full flex justify-center mb-2">
+                          <div className="h-8 px-2 py-1 bg-background/80 rounded-lg flex items-center justify-center backdrop-blur-sm">
+                            <img
+                              src={active.logo}
+                              alt={`${active.name} logo`}
+                              className="h-5 max-w-[100px] object-contain"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Name */}
+                        <p className="text-sm font-heading font-bold text-foreground text-center leading-tight">
+                          {active.name}
+                        </p>
+
+                        {/* City */}
+                        <div className="flex items-center justify-center gap-1 mt-1">
+                          <MapPin className="w-3 h-3 text-secondary" />
+                          <p className="text-[11px] font-body text-muted-foreground">
+                            {active.city}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    /* Simple label for startups without assets */
+                    <div className="bg-card/90 backdrop-blur-sm border border-secondary/25 rounded-xl px-4 py-3 shadow-[0_12px_32px_rgba(0,0,0,0.4)]">
+                      <p className="text-sm font-heading font-bold text-foreground text-center">
                         {active.name}
                       </p>
-                      <p className="text-xs font-body text-muted-foreground mt-0.5">
-                        {active.city}
-                      </p>
+                      <div className="flex items-center justify-center gap-1 mt-1">
+                        <MapPin className="w-3 h-3 text-secondary" />
+                        <p className="text-[10px] font-body text-muted-foreground">
+                          {active.city}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex justify-center pt-3 border-t border-border/30">
-                    <img
-                      src={active.logo}
-                      alt={`${active.name} logo`}
-                      className="h-7 object-contain opacity-90"
-                    />
-                  </div>
-                </div>
-                {/* Arrow */}
-                <div className="absolute left-1/2 -translate-x-1/2 -bottom-2 w-4 h-4 rotate-45 bg-card/95 border-r border-b border-secondary/30" />
-              </div>
-            ) : (
-              /* Simple label card */
-              <div className="bg-card/90 backdrop-blur-sm border border-secondary/25 rounded-xl px-4 py-2.5 shadow-[0_12px_32px_rgba(0,0,0,0.4)]">
-                <p className="text-sm font-heading font-bold text-foreground">
-                  {active.name}
-                </p>
-                <p className="text-[10px] font-body text-muted-foreground">
-                  {active.city}
-                </p>
-                <div className="absolute left-1/2 -translate-x-1/2 -bottom-1.5 w-3 h-3 rotate-45 bg-card/90 border-r border-b border-secondary/25" />
-              </div>
-            )}
+                  )}
+                </motion.div>
+              );
+            })()}
           </motion.div>
         )}
       </AnimatePresence>
