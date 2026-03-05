@@ -50,16 +50,14 @@ const Index = () => {
               </p>
 
               {/* Stats highlights */}
-              <div className="flex flex-wrap gap-6 mb-8">
-                {[
-                  { val: "4500+", label: "Applications from 190+ Cities" },
-                  { val: "65", label: "Startups | INR 700+ Cr Valuation" },
-                ].map((s) => (
-                  <div key={s.label}>
-                    <span className="font-heading font-bold text-2xl text-secondary">{s.val}</span>
-                    <p className="text-primary-foreground/60 font-body text-xs mt-0.5">{s.label}</p>
-                  </div>
-                ))}
+              <div className="flex flex-wrap gap-8 mb-8">
+                <div>
+                  <span className="font-heading font-bold text-2xl text-secondary">4500+</span>
+                  <p className="text-primary-foreground/60 font-body text-xs mt-0.5">Applications from 190+ Cities</p>
+                </div>
+                <div>
+                  <span className="font-heading font-bold text-2xl text-secondary whitespace-nowrap">65 Startups | INR 700+ Cr Valuation</span>
+                </div>
               </div>
 
               <p className="font-body text-primary-foreground/70 text-sm mb-6">
@@ -96,49 +94,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Hero Cards */}
-      <section className="section-padding bg-background -mt-8 relative z-20">
-        <div className="container-wide">
-          <div className="grid md:grid-cols-2 gap-6 -mt-16">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-card border border-border rounded-2xl p-8 shadow-lg card-hover"
-            >
-              <h3 className="font-heading font-bold text-xl text-foreground mb-2">For Founders</h3>
-              <p className="font-body text-muted-foreground text-sm mb-4">
-                If you are a startup looking to scale, we will be happy to help.
-              </p>
-              <Link
-                to="/program"
-                className="inline-flex px-5 py-2.5 rounded-full bg-secondary text-secondary-foreground font-heading font-semibold text-sm hover:opacity-90"
-              >
-                Explore the Program
-              </Link>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="bg-card border border-border rounded-2xl p-8 shadow-lg card-hover"
-            >
-              <h3 className="font-heading font-bold text-xl text-foreground mb-2">For Investors</h3>
-              <p className="font-body text-muted-foreground text-sm mb-4">
-                Partner with us to back category-defining companies for Bharat and beyond.
-              </p>
-              <Link
-                to="/investor-hub"
-                className="inline-flex px-5 py-2.5 rounded-full bg-primary text-primary-foreground font-heading font-semibold text-sm hover:opacity-90"
-              >
-                Enter Investor Hub
-              </Link>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      {/* Spacer */}
+      <div className="h-8" />
 
       <FeaturedPortfolio />
       <MilestonesSection />

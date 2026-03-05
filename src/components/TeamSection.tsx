@@ -11,6 +11,7 @@ import tabishImg from "@/assets/team/tabish-sangrar.webp";
 import rajaImg from "@/assets/team/raja-singh.webp";
 
 const team = [
+  { name: "Sameer Ahmed", image: "", linkedin: "" },
   { name: "Dr. Ebaad Momin", image: ebaadImg, linkedin: "https://www.linkedin.com/in/ebaad-momin-a8435324/" },
   { name: "Mohammed Mohin Shaikh", image: mohinImg, linkedin: "https://www.linkedin.com/in/mahammed-mohin-98306311/" },
   { name: "Salman Mohammed", image: salmanImg, linkedin: "https://www.linkedin.com/in/salman-mohammed-b05a497/" },
@@ -91,11 +92,19 @@ const TeamSection = () => {
                 className="group relative rounded-xl overflow-hidden bg-card border border-border card-hover"
               >
                 <div className="aspect-square overflow-hidden">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
+                  {member.image ? (
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-primary/10 flex items-center justify-center">
+                      <span className="font-heading font-bold text-3xl text-primary">
+                        {member.name.split(" ").map(n => n[0]).join("").slice(0, 2)}
+                      </span>
+                    </div>
+                  )}
                 </div>
                 <div className="p-4">
                   <h3 className="font-heading font-semibold text-sm text-foreground">{member.name}</h3>
