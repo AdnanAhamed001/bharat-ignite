@@ -94,25 +94,25 @@ const IndiaMapHero = () => {
         }}
         transition={{ duration: 2, ease: "easeInOut" }}
       >
-        {/* India map image - styled with CSS filters */}
+        {/* India map image - teal/gold styled */}
         <img
           src={indiaMapSvg}
           alt="India map"
           className="absolute inset-0 w-full h-full object-contain pointer-events-none select-none"
           style={{
-            filter: "brightness(0.35) sepia(1) hue-rotate(160deg) saturate(2.5)",
-            opacity: 0.55,
+            filter: "brightness(0.6) sepia(1) hue-rotate(150deg) saturate(1.8) drop-shadow(0 0 12px hsl(42 94% 62% / 0.25))",
+            opacity: 0.75,
           }}
         />
 
-        {/* Glowing outline overlay of the same map */}
+        {/* Golden glow outline overlay */}
         <img
           src={indiaMapSvg}
           alt=""
           className="absolute inset-0 w-full h-full object-contain pointer-events-none select-none mix-blend-screen"
           style={{
-            filter: "brightness(0.2) sepia(1) hue-rotate(30deg) saturate(3) drop-shadow(0 0 8px hsl(42 94% 62% / 0.3))",
-            opacity: 0.4,
+            filter: "brightness(0.4) sepia(1) hue-rotate(20deg) saturate(4) drop-shadow(0 0 16px hsl(42 94% 62% / 0.4))",
+            opacity: 0.35,
           }}
         />
 
