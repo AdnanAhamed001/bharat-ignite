@@ -23,6 +23,12 @@ import naarioLogo from "@/assets/startups/naario-logo.png";
 import naarioFounder from "@/assets/startups/naario-founder.png";
 import crinkLogo from "@/assets/startups/crink-logo.png";
 import crinkFounder from "@/assets/startups/crink-founder.png";
+import mypahadiLogo from "@/assets/startups/mypahadi-logo.png";
+import mypahadiFounder from "@/assets/startups/mypahadi-founder.png";
+import extramileLogo from "@/assets/startups/extramile-logo.png";
+import extramileFounder from "@/assets/startups/extramile-founder.png";
+import freshleafLogo from "@/assets/startups/freshleaf-logo.png";
+import freshleafFounder from "@/assets/startups/freshleaf-founder.png";
 
 interface StartupSpot {
   name: string;
@@ -34,18 +40,19 @@ interface StartupSpot {
 }
 
 const startups: StartupSpot[] = [
-  { name: "Alchemyst AI", city: "Bengaluru", x: 44, y: 76, logo: alchemystLogo, founder: alchemystFounder },
-  { name: "NuGenomics", city: "Bengaluru", x: 44, y: 76, logo: nugenomicsLogo, founder: nugenomicsFounder },
-  { name: "Bioreform", city: "Hyderabad", x: 46, y: 64, logo: bioreformLogo, founder: bioreformFounder },
-  { name: "Boingg", city: "Gurgaon", x: 42, y: 30, logo: fitkinLogo, founder: fitkinFounder },
-  { name: "FitKin", city: "Delhi", x: 44, y: 28, logo: boinggLogo, founder: boinggFounder },
-  { name: "ChocoChi", city: "Kozhikode", x: 37, y: 80, logo: chocochiLogo, founder: chocochiFounder },
+  { name: "Alchemyst AI", city: "Bengaluru", x: 44, y: 74, logo: alchemystLogo, founder: alchemystFounder },
+  { name: "NuGenomics", city: "Bengaluru", x: 46, y: 73, logo: nugenomicsLogo, founder: nugenomicsFounder },
+  { name: "Bioreform", city: "Hyderabad", x: 46, y: 62, logo: bioreformLogo, founder: bioreformFounder },
+  { name: "Boingg", city: "Gurgaon", x: 42, y: 30, logo: boinggLogo, founder: boinggFounder },
+  { name: "FitKin", city: "Delhi", x: 44, y: 28, logo: fitkinLogo, founder: fitkinFounder },
+  { name: "ChocoChi", city: "Kozhikode", x: 38, y: 78, logo: chocochiLogo, founder: chocochiFounder },
   { name: "DaanVeda", city: "Noida", x: 46, y: 29, logo: daanvedaLogo, founder: daanvedaFounder },
-  { name: "Kamikala", city: "Kalimpong", x: 63, y: 36, logo: kamikalaLogo, founder: kamikalaFounder },
-  { name: "Crink", city: "Kochi", x: 38, y: 83, logo: crinkLogo, founder: crinkFounder },
-  { name: "BeFriends", city: "Vadodara", x: 33, y: 50, logo: "", founder: "" },
-  { name: "My Pahadi Dukan", city: "Roorkee", x: 44, y: 24, logo: "", founder: "" },
-  { name: "Naario", city: "Delhi", x: 44, y: 28, logo: naarioLogo, founder: naarioFounder },
+  { name: "Kamikala", city: "Kalimpong", x: 63, y: 34, logo: kamikalaLogo, founder: kamikalaFounder },
+  { name: "Crink", city: "Kochi", x: 39, y: 80, logo: crinkLogo, founder: crinkFounder },
+  { name: "Naario", city: "Delhi", x: 43, y: 27, logo: naarioLogo, founder: naarioFounder },
+  { name: "My Pahadi Dukan", city: "Roorkee", x: 44, y: 23, logo: mypahadiLogo, founder: mypahadiFounder },
+  { name: "ExtraMile Play", city: "Mumbai", x: 34, y: 55, logo: extramileLogo, founder: extramileFounder },
+  { name: "Freshleaf", city: "Ludhiana", x: 40, y: 22, logo: freshleafLogo, founder: freshleafFounder },
 ];
 
 const CYCLE_MS = 3500;
@@ -109,7 +116,6 @@ const IndiaMapHero = () => {
               zIndex: isActive ? 10 : 5,
             }}
           >
-            {/* Pulse ring for active */}
             {isActive && (
               <motion.div
                 className="absolute inset-0 -m-3 rounded-full border-2 border-secondary/40"
@@ -151,9 +157,9 @@ const IndiaMapHero = () => {
                   className="absolute"
                   style={{
                     left: "50%",
-                    top: pos.originY === "bottom" ? "0%" : "0%",
+                    top: "0%",
                     transform: `translate(calc(-50% + ${pos.offsetX}px), ${pos.translateY})`,
-                    marginTop: pos.originY === "bottom" ? `${pos.offsetY}px` : `${pos.offsetY}px`,
+                    marginTop: `${pos.offsetY}px`,
                   }}
                   animate={{ y: [0, -6, 0] }}
                   transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
@@ -169,60 +175,42 @@ const IndiaMapHero = () => {
                     }}
                   />
 
-                  {active.logo && active.founder ? (
-                    /* Premium card with large founder image */
-                    <div className="w-[200px] rounded-2xl overflow-hidden bg-card/95 backdrop-blur-xl border border-secondary/20 shadow-[0_20px_60px_rgba(0,0,0,0.5),0_0_30px_hsl(var(--secondary)/0.1)]">
-                      {/* Founder image - 65% of card */}
-                      <div className="relative w-full h-[160px] overflow-hidden">
-                        <img
-                          src={active.founder}
-                          alt={`${active.name} founder`}
-                          className="w-full h-full object-cover object-top"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
-                      </div>
-
-                      {/* Info section */}
-                      <div className="px-3.5 pb-3.5 -mt-3 relative z-10">
-                        {/* Logo */}
-                        <div className="w-full flex justify-center mb-2">
-                          <div className="h-8 px-2 py-1 bg-background/80 rounded-lg flex items-center justify-center backdrop-blur-sm">
-                            <img
-                              src={active.logo}
-                              alt={`${active.name} logo`}
-                              className="h-5 max-w-[100px] object-contain"
-                            />
-                          </div>
-                        </div>
-
-                        {/* Name */}
-                        <p className="text-sm font-heading font-bold text-foreground text-center leading-tight">
-                          {active.name}
-                        </p>
-
-                        {/* City */}
-                        <div className="flex items-center justify-center gap-1 mt-1">
-                          <MapPin className="w-3 h-3 text-secondary" />
-                          <p className="text-[11px] font-body text-muted-foreground">
-                            {active.city}
-                          </p>
-                        </div>
-                      </div>
+                  {/* Card */}
+                  <div className="w-[190px] rounded-2xl overflow-hidden bg-card/95 backdrop-blur-xl border border-secondary/20 shadow-[0_20px_60px_rgba(0,0,0,0.5),0_0_30px_hsl(var(--secondary)/0.1)]">
+                    {/* Founder image */}
+                    <div className="relative w-full h-[130px] overflow-hidden">
+                      <img
+                        src={active.founder}
+                        alt={`${active.name} founder`}
+                        className="w-full h-full object-cover object-top"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
                     </div>
-                  ) : (
-                    /* Simple label for startups without assets */
-                    <div className="bg-card/90 backdrop-blur-sm border border-secondary/25 rounded-xl px-4 py-3 shadow-[0_12px_32px_rgba(0,0,0,0.4)]">
-                      <p className="text-sm font-heading font-bold text-foreground text-center">
+
+                    {/* Info section */}
+                    <div className="px-3 pb-3 -mt-3 relative z-10">
+                      <div className="w-full flex justify-center mb-1.5">
+                        <div className="h-7 px-2 py-1 bg-background/80 rounded-lg flex items-center justify-center backdrop-blur-sm">
+                          <img
+                            src={active.logo}
+                            alt={`${active.name} logo`}
+                            className="h-4 max-w-[90px] object-contain"
+                          />
+                        </div>
+                      </div>
+
+                      <p className="text-xs font-heading font-bold text-foreground text-center leading-tight">
                         {active.name}
                       </p>
-                      <div className="flex items-center justify-center gap-1 mt-1">
-                        <MapPin className="w-3 h-3 text-secondary" />
+
+                      <div className="flex items-center justify-center gap-1 mt-0.5">
+                        <MapPin className="w-2.5 h-2.5 text-secondary" />
                         <p className="text-[10px] font-body text-muted-foreground">
                           {active.city}
                         </p>
                       </div>
                     </div>
-                  )}
+                  </div>
                 </motion.div>
               );
             })()}
