@@ -77,7 +77,7 @@ const IndiaMapHero = () => {
   }, [activeIndex]);
 
   return (
-    <div className="relative w-full h-full min-h-[500px] lg:min-h-[600px] overflow-hidden rounded-2xl">
+    <div className="relative w-full min-h-[500px] lg:min-h-[650px] h-[650px] overflow-hidden rounded-2xl">
       {/* Ambient glow effects */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <div className="absolute top-1/4 left-1/3 w-80 h-80 bg-secondary/10 rounded-full blur-[100px]" />
@@ -86,7 +86,7 @@ const IndiaMapHero = () => {
 
       {/* Camera container - pans and zooms */}
       <motion.div
-        className="relative w-full h-full"
+        className="relative w-full h-full min-h-[650px]"
         animate={{
           x: `${cameraTransform.x}%`,
           y: `${cameraTransform.y}%`,
@@ -94,25 +94,14 @@ const IndiaMapHero = () => {
         }}
         transition={{ duration: 2, ease: "easeInOut" }}
       >
-        {/* India map image - styled with CSS filters */}
+        {/* India map */}
         <img
           src={indiaMapSvg}
           alt="India map"
           className="absolute inset-0 w-full h-full object-contain pointer-events-none select-none"
           style={{
-            filter: "brightness(0.35) sepia(1) hue-rotate(160deg) saturate(2.5)",
-            opacity: 0.55,
-          }}
-        />
-
-        {/* Glowing outline overlay of the same map */}
-        <img
-          src={indiaMapSvg}
-          alt=""
-          className="absolute inset-0 w-full h-full object-contain pointer-events-none select-none mix-blend-screen"
-          style={{
-            filter: "brightness(0.2) sepia(1) hue-rotate(30deg) saturate(3) drop-shadow(0 0 8px hsl(42 94% 62% / 0.3))",
-            opacity: 0.4,
+            filter: "drop-shadow(0 0 20px hsl(42 94% 62% / 0.3))",
+            opacity: 0.85,
           }}
         />
 
