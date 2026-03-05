@@ -11,7 +11,6 @@ import tabishImg from "@/assets/team/tabish-sangrar.webp";
 import rajaImg from "@/assets/team/raja-singh.webp";
 
 const team = [
-  { name: "Sameer Ahmed", image: "", linkedin: "" },
   { name: "Dr. Ebaad Momin", image: ebaadImg, linkedin: "https://www.linkedin.com/in/ebaad-momin-a8435324/" },
   { name: "Mohammed Mohin Shaikh", image: mohinImg, linkedin: "https://www.linkedin.com/in/mahammed-mohin-98306311/" },
   { name: "Salman Mohammed", image: salmanImg, linkedin: "https://www.linkedin.com/in/salman-mohammed-b05a497/" },
@@ -19,6 +18,7 @@ const team = [
   { name: "Tariq Syed", image: tariqImg, linkedin: "https://www.linkedin.com/in/tariqahmedsyed/" },
   { name: "Tabish Sangrar", image: tabishImg, linkedin: "https://www.linkedin.com/in/tabish-sangrar/" },
   { name: "Raja Singh", image: rajaImg, linkedin: "https://www.linkedin.com/in/rsbhurji/" },
+  { name: "Sameer Ahmed", image: "", linkedin: "" },
 ];
 
 const mentors = [
