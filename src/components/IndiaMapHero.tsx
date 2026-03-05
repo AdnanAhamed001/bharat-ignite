@@ -86,7 +86,7 @@ const IndiaMapHero = () => {
 
       {/* Camera container - pans and zooms */}
       <motion.div
-        className="relative w-full h-full"
+        className="relative w-full h-full min-h-[650px]"
         animate={{
           x: `${cameraTransform.x}%`,
           y: `${cameraTransform.y}%`,
