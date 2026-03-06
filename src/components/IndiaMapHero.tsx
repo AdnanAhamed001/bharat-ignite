@@ -40,28 +40,28 @@ interface StartupSpot {
 }
 
 const startups: StartupSpot[] = [
-  { name: "Alchemyst AI", city: "Bengaluru", x: 39, y: 72, logo: alchemystLogo, founder: alchemystFounder },
-  { name: "NuGenomics", city: "Bengaluru", x: 40, y: 74, logo: nugenomicsLogo, founder: nugenomicsFounder },
-  { name: "Bioreform", city: "Hyderabad", x: 44, y: 60, logo: bioreformLogo, founder: bioreformFounder },
-  { name: "Boingg", city: "Gurgaon", x: 35, y: 35, logo: boinggLogo, founder: boinggFounder },
-  { name: "FitKin", city: "Delhi", x: 36, y: 33, logo: fitkinLogo, founder: fitkinFounder },
-  { name: "ChocoChi", city: "Kozhikode", x: 29, y: 83, logo: chocochiLogo, founder: chocochiFounder },
-  { name: "DaanVeda", city: "Noida", x: 37, y: 33, logo: daanvedaLogo, founder: daanvedaFounder },
-  { name: "Kamikala", city: "Kalimpong", x: 69, y: 40, logo: kamikalaLogo, founder: kamikalaFounder },
-  { name: "Crink", city: "Kochi", x: 34, y: 81, logo: crinkLogo, founder: crinkFounder },
-  { name: "Naario", city: "Delhi", x: 36, y: 34, logo: naarioLogo, founder: naarioFounder },
-  { name: "My Pahadi Dukan", city: "Roorkee", x: 42, y: 30, logo: mypahadiLogo, founder: mypahadiFounder },
-  { name: "ExtraMile Play", city: "Mumbai", x: 26, y: 58, logo: extramileLogo, founder: extramileFounder },
-  { name: "Freshleaf", city: "Ludhiana", x: 31, y: 29, logo: freshleafLogo, founder: freshleafFounder },
+  { name: "Alchemyst AI", city: "Bengaluru", x: 34, y: 78, logo: alchemystLogo, founder: alchemystFounder },
+  { name: "NuGenomics", city: "Bengaluru", x: 35, y: 80, logo: nugenomicsLogo, founder: nugenomicsFounder },
+  { name: "Bioreform", city: "Hyderabad", x: 41, y: 63, logo: bioreformLogo, founder: bioreformFounder },
+  { name: "Boingg", city: "Gurgaon", x: 35, y: 42, logo: boinggLogo, founder: boinggFounder },
+  { name: "FitKin", city: "Delhi", x: 36, y: 40, logo: fitkinLogo, founder: fitkinFounder },
+  { name: "ChocoChi", city: "Kozhikode", x: 30, y: 88, logo: chocochiLogo, founder: chocochiFounder },
+  { name: "DaanVeda", city: "Noida", x: 37, y: 40, logo: daanvedaLogo, founder: daanvedaFounder },
+  { name: "Kamikala", city: "Kalimpong", x: 67, y: 45, logo: kamikalaLogo, founder: kamikalaFounder },
+  { name: "Crink", city: "Kochi", x: 31, y: 86, logo: crinkLogo, founder: crinkFounder },
+  { name: "Naario", city: "Delhi", x: 36, y: 41, logo: naarioLogo, founder: naarioFounder },
+  { name: "My Pahadi Dukan", city: "Roorkee", x: 42, y: 36, logo: mypahadiLogo, founder: mypahadiFounder },
+  { name: "ExtraMile Play", city: "Mumbai", x: 24, y: 62, logo: extramileLogo, founder: extramileFounder },
+  { name: "Freshleaf", city: "Ludhiana", x: 31, y: 31, logo: freshleafLogo, founder: freshleafFounder },
 ];
 
-const CYCLE_MS = 3500;
+const CYCLE_MS = 2400;
 
 const IndiaMapHero = () => {
   const [activeIndex, setActiveIndex] = useState(-1);
 
   useEffect(() => {
-    const t = setTimeout(() => setActiveIndex(0), 800);
+    const t = setTimeout(() => setActiveIndex(0), 400);
     return () => clearTimeout(t);
   }, []);
 
@@ -87,7 +87,7 @@ const IndiaMapHero = () => {
   };
 
   return (
-    <div className="relative w-full h-[700px] overflow-hidden rounded-2xl">
+    <div className="relative w-full h-[620px] overflow-hidden rounded-2xl">
       {/* Ambient glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/3 w-72 h-72 bg-secondary/8 rounded-full blur-[90px]" />
