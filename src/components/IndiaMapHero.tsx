@@ -55,7 +55,7 @@ const startups: StartupSpot[] = [
   { name: "Freshleaf", city: "Ludhiana", x: 31, y: 31, logo: freshleafLogo, founder: freshleafFounder },
 ];
 
-const CYCLE_MS = 2400;
+const CYCLE_MS = 2000;
 
 type MapBounds = {
   left: number;
