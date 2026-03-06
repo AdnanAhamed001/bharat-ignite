@@ -224,8 +224,8 @@ const IndiaMapHero = () => {
             key={activeIndex}
             className="absolute pointer-events-none"
             style={{
-              left: `${active.x}%`,
-              top: `${active.y}%`,
+              left: getDotPosition(active).left,
+              top: getDotPosition(active).top,
               zIndex: 30,
             }}
             initial={{ opacity: 0, scale: 0.9 }}
