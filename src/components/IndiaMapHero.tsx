@@ -57,8 +57,18 @@ const startups: StartupSpot[] = [
 
 const CYCLE_MS = 2400;
 
+type MapBounds = {
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+};
+
 const IndiaMapHero = () => {
   const [activeIndex, setActiveIndex] = useState(-1);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const mapImgRef = useRef<HTMLImageElement | null>(null);
+  const [mapBounds, setMapBounds] = useState<MapBounds>({ left: 0, top: 0, width: 0, height: 0 });
 
   useEffect(() => {
     const t = setTimeout(() => setActiveIndex(0), 400);
@@ -71,7 +81,55 @@ const IndiaMapHero = () => {
     return () => clearInterval(id);
   }, [activeIndex]);
 
+  useLayoutEffect(() => {
+    const updateMapBounds = () => {
+      const container = containerRef.current;
+      const mapImg = mapImgRef.current;
+      if (!container || !mapImg || !mapImg.naturalWidth || !mapImg.naturalHeight) return;
+
+      const containerWidth = container.clientWidth;
+      const containerHeight = container.clientHeight;
+      const mapRatio = mapImg.naturalWidth / mapImg.naturalHeight;
+      const containerRatio = containerWidth / containerHeight;
+
+      let width = 0;
+      let height = 0;
+      let left = 0;
+      let top = 0;
+
+      if (containerRatio > mapRatio) {
+        height = containerHeight;
+        width = height * mapRatio;
+        left = (containerWidth - width) / 2;
+      } else {
+        width = containerWidth;
+        height = width / mapRatio;
+        top = (containerHeight - height) / 2;
+      }
+
+      setMapBounds({ left, top, width, height });
+    };
+
+    updateMapBounds();
+    window.addEventListener("resize", updateMapBounds);
+    return () => window.removeEventListener("resize", updateMapBounds);
+  }, []);
+
   const active = activeIndex >= 0 ? startups[activeIndex] : null;
+
+  const getDotPosition = (s: StartupSpot) => {
+    if (mapBounds.width === 0 || mapBounds.height === 0) {
+      return {
+        left: `${s.x}%`,
+        top: `${s.y}%`,
+      };
+    }
+
+    return {
+      left: `${mapBounds.left + (s.x / 100) * mapBounds.width}px`,
+      top: `${mapBounds.top + (s.y / 100) * mapBounds.height}px`,
+    };
+  };
 
   // Card placement: if dot is in bottom half, show card above; otherwise below
   const getCardPosition = (s: StartupSpot) => {
