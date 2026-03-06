@@ -145,7 +145,7 @@ const IndiaMapHero = () => {
   };
 
   return (
-    <div className="relative w-full h-[620px] overflow-hidden rounded-2xl">
+    <div ref={containerRef} className="relative w-full h-[620px] overflow-hidden rounded-2xl">
       {/* Ambient glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/3 w-72 h-72 bg-secondary/8 rounded-full blur-[90px]" />
@@ -154,6 +154,29 @@ const IndiaMapHero = () => {
 
       {/* Map image */}
       <img
+        ref={mapImgRef}
+        onLoad={() => {
+          const container = containerRef.current;
+          const mapImg = mapImgRef.current;
+          if (!container || !mapImg || !mapImg.naturalWidth || !mapImg.naturalHeight) return;
+
+          const containerWidth = container.clientWidth;
+          const containerHeight = container.clientHeight;
+          const mapRatio = mapImg.naturalWidth / mapImg.naturalHeight;
+          const containerRatio = containerWidth / containerHeight;
+
+          if (containerRatio > mapRatio) {
+            const height = containerHeight;
+            const width = height * mapRatio;
+            const left = (containerWidth - width) / 2;
+            setMapBounds({ left, top: 0, width, height });
+          } else {
+            const width = containerWidth;
+            const height = width / mapRatio;
+            const top = (containerHeight - height) / 2;
+            setMapBounds({ left: 0, top, width, height });
+          }
+        }}
         src={indiaMapSvg}
         alt="India startup ecosystem map"
         className="absolute inset-0 w-full h-full object-contain pointer-events-none select-none"
@@ -163,13 +186,15 @@ const IndiaMapHero = () => {
       {/* All city dots */}
       {startups.map((s, i) => {
         const isActive = activeIndex === i;
+        const dotPosition = getDotPosition(s);
+
         return (
           <div
             key={`${s.name}-dot`}
             className="absolute"
             style={{
-              left: `${s.x}%`,
-              top: `${s.y}%`,
+              left: dotPosition.left,
+              top: dotPosition.top,
               transform: "translate(-50%, -50%)",
               zIndex: isActive ? 10 : 5,
             }}
