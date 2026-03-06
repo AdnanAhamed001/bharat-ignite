@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin } from "lucide-react";
 import indiaMapSvg from "@/assets/india-map-detailed.svg";
@@ -55,10 +55,20 @@ const startups: StartupSpot[] = [
   { name: "Freshleaf", city: "Ludhiana", x: 31, y: 31, logo: freshleafLogo, founder: freshleafFounder },
 ];
 
-const CYCLE_MS = 2400;
+const CYCLE_MS = 2000;
+
+type MapBounds = {
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+};
 
 const IndiaMapHero = () => {
   const [activeIndex, setActiveIndex] = useState(-1);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const mapImgRef = useRef<HTMLImageElement | null>(null);
+  const [mapBounds, setMapBounds] = useState<MapBounds>({ left: 0, top: 0, width: 0, height: 0 });
 
   useEffect(() => {
     const t = setTimeout(() => setActiveIndex(0), 400);
@@ -71,7 +81,55 @@ const IndiaMapHero = () => {
     return () => clearInterval(id);
   }, [activeIndex]);
 
+  useLayoutEffect(() => {
+    const updateMapBounds = () => {
+      const container = containerRef.current;
+      const mapImg = mapImgRef.current;
+      if (!container || !mapImg || !mapImg.naturalWidth || !mapImg.naturalHeight) return;
+
+      const containerWidth = container.clientWidth;
+      const containerHeight = container.clientHeight;
+      const mapRatio = mapImg.naturalWidth / mapImg.naturalHeight;
+      const containerRatio = containerWidth / containerHeight;
+
+      let width = 0;
+      let height = 0;
+      let left = 0;
+      let top = 0;
+
+      if (containerRatio > mapRatio) {
+        height = containerHeight;
+        width = height * mapRatio;
+        left = (containerWidth - width) / 2;
+      } else {
+        width = containerWidth;
+        height = width / mapRatio;
+        top = (containerHeight - height) / 2;
+      }
+
+      setMapBounds({ left, top, width, height });
+    };
+
+    updateMapBounds();
+    window.addEventListener("resize", updateMapBounds);
+    return () => window.removeEventListener("resize", updateMapBounds);
+  }, []);
+
   const active = activeIndex >= 0 ? startups[activeIndex] : null;
+
+  const getDotPosition = (s: StartupSpot) => {
+    if (mapBounds.width === 0 || mapBounds.height === 0) {
+      return {
+        left: `${s.x}%`,
+        top: `${s.y}%`,
+      };
+    }
+
+    return {
+      left: `${mapBounds.left + (s.x / 100) * mapBounds.width}px`,
+      top: `${mapBounds.top + (s.y / 100) * mapBounds.height}px`,
+    };
+  };
 
   // Card placement: if dot is in bottom half, show card above; otherwise below
   const getCardPosition = (s: StartupSpot) => {
@@ -87,7 +145,7 @@ const IndiaMapHero = () => {
   };
 
   return (
-    <div className="relative w-full h-[620px] overflow-hidden rounded-2xl">
+    <div ref={containerRef} className="relative w-full h-[620px] overflow-hidden rounded-2xl">
       {/* Ambient glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/3 w-72 h-72 bg-secondary/8 rounded-full blur-[90px]" />
@@ -96,6 +154,29 @@ const IndiaMapHero = () => {
 
       {/* Map image */}
       <img
+        ref={mapImgRef}
+        onLoad={() => {
+          const container = containerRef.current;
+          const mapImg = mapImgRef.current;
+          if (!container || !mapImg || !mapImg.naturalWidth || !mapImg.naturalHeight) return;
+
+          const containerWidth = container.clientWidth;
+          const containerHeight = container.clientHeight;
+          const mapRatio = mapImg.naturalWidth / mapImg.naturalHeight;
+          const containerRatio = containerWidth / containerHeight;
+
+          if (containerRatio > mapRatio) {
+            const height = containerHeight;
+            const width = height * mapRatio;
+            const left = (containerWidth - width) / 2;
+            setMapBounds({ left, top: 0, width, height });
+          } else {
+            const width = containerWidth;
+            const height = width / mapRatio;
+            const top = (containerHeight - height) / 2;
+            setMapBounds({ left: 0, top, width, height });
+          }
+        }}
         src={indiaMapSvg}
         alt="India startup ecosystem map"
         className="absolute inset-0 w-full h-full object-contain pointer-events-none select-none"
@@ -105,13 +186,15 @@ const IndiaMapHero = () => {
       {/* All city dots */}
       {startups.map((s, i) => {
         const isActive = activeIndex === i;
+        const dotPosition = getDotPosition(s);
+
         return (
           <div
             key={`${s.name}-dot`}
             className="absolute"
             style={{
-              left: `${s.x}%`,
-              top: `${s.y}%`,
+              left: dotPosition.left,
+              top: dotPosition.top,
               transform: "translate(-50%, -50%)",
               zIndex: isActive ? 10 : 5,
             }}
@@ -141,8 +224,8 @@ const IndiaMapHero = () => {
             key={activeIndex}
             className="absolute pointer-events-none"
             style={{
-              left: `${active.x}%`,
-              top: `${active.y}%`,
+              left: getDotPosition(active).left,
+              top: getDotPosition(active).top,
               zIndex: 30,
             }}
             initial={{ opacity: 0, scale: 0.9 }}
